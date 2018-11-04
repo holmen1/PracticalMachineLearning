@@ -7,11 +7,12 @@ from sklearn.linear_model import LinearRegression
 import datetime
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
 
 df = quandl.get("WIKI/GOOGL")
 
-#print(df.head())
+style.use('ggplot')
 
 df = df[['Adj. Open',  'Adj. High',  'Adj. Low',  'Adj. Close', 'Adj. Volume']]
 df['HL_PCT'] = (df['Adj. High'] - df['Adj. Low']) / df['Adj. Close'] * 100.0
@@ -39,15 +40,18 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 # print(confidence)
 # confidence = 0.7924907633841987
 
-clf = LinearRegression(n_jobs=-1)
+""" clf = LinearRegression(n_jobs=-1)
 clf.fit(X_train, y_train)
 confidence = clf.score(X_test, y_test)
 print(confidence)
+with open('linearregression.pickle','wb') as f:
+    pickle.dump(clf, f) """
+
+pickle_in = open('linearregression.pickle','rb')
+clf = pickle.load(pickle_in)
 
 forecast_set = clf.predict(X_lately)
-print(forecast_set, confidence, forecast_out)
-
-style.use('ggplot')
+#print(forecast_set, confidence, forecast_out)
 
 df['Forecast'] = np.nan
 
