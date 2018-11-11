@@ -1,25 +1,57 @@
 from statistics import mean
 import numpy as np
+import random
 import matplotlib.pyplot as plt
-np.set_printoptions(threshold=np.nan)
-
-xs = [1,2,3,4,5]
-ys = [5,4,6,5,6]
-
-#plt.scatter(xs,ys)
-#plt.show()
+from matplotlib import style
+style.use('ggplot')
 
 
-xs = np.array([1,2,3,4,5], dtype=np.float64)
-ys = np.array([5,4,6,5,6], dtype=np.float64)
+def create_dataset(N,variance,step=2,correlation=False):
+    val = 1
+    ys = []
+    for i in range(N):
+        y = val + random.randrange(-variance,variance)
+        ys.append(y)
+        if correlation and correlation == 'pos':
+            val+=step
+        elif correlation and correlation == 'neg':
+            val-=step
+
+    xs = [i for i in range(len(ys))]
+    
+    return np.array(xs, dtype=np.float64),np.array(ys,dtype=np.float64)
+
+
+def coefficient_of_determination(ys_orig,ys_line):
+    y_mean_line = [mean(ys_orig) for y in ys_orig]
+
+    squared_error_regr = sum((ys_line - ys_orig) * (ys_line - ys_orig))
+    squared_error_y_mean = sum((y_mean_line - ys_orig) * (y_mean_line - ys_orig))
+
+    r_squared = 1 - (squared_error_regr/squared_error_y_mean)
+
+    return r_squared
+
+
+
+xs, ys = create_dataset(100,22,2,correlation='neg')
+#xs, ys = create_dataset(100,22,2)
 X = np.vstack([xs, np.ones(len(xs))]).T
-#X = np.concatenate((xs, np.ones(np.shape(xs))), axis=1)
-print(X)
 
 m, c = np.linalg.lstsq(X, ys)[0]
 print(m, c)
 
-plt.plot(xs, ys, 'o', label='Original data', markersize=10)
-plt.plot(xs, m*xs + c, 'r', label='Fitted line')
-plt.legend()
+# or numpy linalg
+XX = np.matmul(X.T,X)
+Xy = np.matmul(X.T,ys)
+XXinv = np.linalg.inv(XX)
+print(np.matmul(XXinv,Xy))
+
+regression_line = [(m*x)+c for x in xs]
+r_squared = coefficient_of_determination(ys,regression_line)
+print(r_squared)
+
+plt.scatter(xs,ys,color='#003F72', label = 'data')
+plt.plot(xs, regression_line, label = 'regression line')
+plt.legend(loc=4)
 plt.show()
