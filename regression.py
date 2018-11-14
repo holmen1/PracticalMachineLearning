@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import numpy as np
 import quandl, math
 from sklearn import preprocessing, svm
@@ -40,6 +40,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 # print(confidence)
 # confidence = 0.7924907633841987
 
+# Serialize trained classifier w Pickle
 """ clf = LinearRegression(n_jobs=-1)
 clf.fit(X_train, y_train)
 confidence = clf.score(X_test, y_test)
