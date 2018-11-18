@@ -13,6 +13,7 @@ y = np.array(df['class'])
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 clf = SVC()
+
 clf.fit(X_train, y_train)
 confidence = clf.score(X_test, y_test)
 print(confidence)
