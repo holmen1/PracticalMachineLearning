@@ -37,7 +37,6 @@ for i in test_data:
 
 correct = 0
 total = 0
-
 for group in test_set:
     for data in test_set[group]:
         vote = k_nearest_neighbors(train_set, data, k=5)
