@@ -103,6 +103,8 @@ feature_columns = [tf.feature_column.numeric_column("total_rooms")]
 my_feature
 feature_columns
 
+
+
 """**NOTE:** The shape of our `total_rooms` data is a one-dimensional array (a list of the total number of rooms for each block). This is the default shape for `numeric_column`, so we don't have to pass it as an argument.
 
 ### Step 2: Define the Target
@@ -460,3 +462,4 @@ train_model(
     batch_size=5,
     input_feature="population"
 )
+
