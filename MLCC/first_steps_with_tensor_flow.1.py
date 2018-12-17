@@ -217,14 +217,23 @@ def train_model(learning_rate, steps, batch_size, input_feature="total_rooms"):
   print("Final RMSE (on training data): %0.2f" % root_mean_squared_error)
 
 """## Task 1:  Achieve an RMSE of 180 or Below
-
 Tweak the model hyperparameters to improve loss and better match the target distribution.
 If, after 5 minutes or so, you're having trouble beating a RMSE of 180, check the solution for a possible combination.
 """
 
-train_model(
+""" train_model(
     learning_rate=0.001,
     steps=4,
     batch_size=1
+) """
+"""
+## Task 2: Try a Different Feature
+See if you can do any better by replacing the `total_rooms` feature with the `population` feature.
+"""
+train_model(
+    learning_rate=0.002,
+    steps=4,
+    batch_size=5,
+    input_feature="population"
 )
 plt.show()
