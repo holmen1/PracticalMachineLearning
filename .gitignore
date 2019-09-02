@@ -5,3 +5,6 @@
 
 # Files as produced by the tests
 tests/test_*.png
+
+/CNN/runs
+/CNN/data
