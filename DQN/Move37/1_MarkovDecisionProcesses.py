@@ -2,7 +2,9 @@
 import numpy as np
 import gym
 
-env = gym.make('CartPole-v0').unwrapped
+
+#env = gym.make('CartPole-v0').unwrapped
+env = gym.make('FrozenLake-v0').unwrapped
 
 def run_episode(env, parameters):
     print('parameters')

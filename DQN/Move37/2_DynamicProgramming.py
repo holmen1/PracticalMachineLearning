@@ -80,7 +80,7 @@ def calculate_greedy_policy(grid, V):
 if __name__ == '__main__':
   # this grid gives you a reward of -0.1 for every non-terminal state
   # we want to see if this will encourage finding a shorter path to the goal
-  grid = standard_grid(obey_prob=1, step_cost=-0.1)
+  grid = standard_grid(obey_prob=0.7, step_cost=-2.5)
 
   # print rewards
   print("rewards:")
