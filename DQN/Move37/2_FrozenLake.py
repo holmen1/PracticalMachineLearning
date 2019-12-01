@@ -20,7 +20,8 @@ class ValueIteration(object):
     """
     
     def __init__(self):
-        self.env = gym.make('Deterministic-4x4-FrozenLake-v0')
+        #self.env = gym.make('Deterministic-4x4-FrozenLake-v0')
+        self.env = gym.make('FrozenLake-v0')
         
 
 
@@ -28,6 +29,16 @@ class ValueIteration(object):
         for action in range(self.env.nA):
             vtemp = self.env.P[s][action]       
             print(vtemp)
+            
+    def onestep(s):
+        
+        for action in range(self.env.nA):
+            v = 0
+            for s in range(self.env.nS):
+                temp = self.env.P[s][action]
+                reward += temp[0][2]
+                va += 
+                
         
     def valueiter(self, n):
         v = np.zeros(self.env.nS)
@@ -41,6 +52,8 @@ class ValueIteration(object):
                 v[s] = vv
         
         print(v)
+        print(np.reshape(v,(4,4)))
+        self.env.render()
 
 
 

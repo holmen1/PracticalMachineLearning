@@ -64,9 +64,9 @@ def print_model_info(env, state, action):
 
 def main():
     # create the environment
-    #env = gym.make('FrozenLake-v0')
+    env = gym.make('FrozenLake-v0')
     # uncomment next line to try the deterministic version
-    env = gym.make('Deterministic-4x4-FrozenLake-v0')
+    #env = gym.make('Deterministic-4x4-FrozenLake-v0')
 
     print_env_info(env)
     print_model_info(env, 0, lake_env.DOWN)
