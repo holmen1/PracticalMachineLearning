@@ -9,3 +9,6 @@ tests/test_*.png
 DAT257x/.ipynb_checkpoints
 
 
+/Cuda/ConsoleApplication1/ConsoleApplication1/Debug
+/Cuda/ConsoleApplication1/Debug
+/Cuda/ConsoleApplication1/.vs/ConsoleApplication1/v16
