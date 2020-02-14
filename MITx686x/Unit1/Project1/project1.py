@@ -37,7 +37,7 @@ def hinge_loss_single(feature_vector, label, theta, theta_0):
     given data point and parameters.
     """
     # Your code here
-    raise NotImplementedError
+    return np.max([0, 1 - label*(np.dot(theta,feature_vector) + theta_0)])
 #pragma: coderesponse end
 
 
@@ -61,7 +61,12 @@ def hinge_loss_full(feature_matrix, labels, theta, theta_0):
     loss across all of the points in the feature matrix.
     """
     # Your code here
-    raise NotImplementedError
+    N = feature_matrix.shape[0]
+    loss = 0
+    for r in range(N):
+        loss += hinge_loss_single(feature_matrix[r], labels[r], theta, theta_0)
+        
+    return loss/N
 #pragma: coderesponse end
 
 
@@ -89,7 +94,10 @@ def perceptron_single_step_update(
     completed.
     """
     # Your code here
-    raise NotImplementedError
+    if label * (np.dot(current_theta, feature_vector) + current_theta_0) <= 0:
+        current_theta += label*feature_vector
+        current_theta_0 += label
+    return (current_theta, current_theta_0)
 #pragma: coderesponse end
 
 
@@ -120,11 +128,13 @@ def perceptron(feature_matrix, labels, T):
     the feature matrix.
     """
     # Your code here
+    theta = np.zeros(feature_matrix.shape[1])
+    theta_0 = 0
     for t in range(T):
         for i in get_order(feature_matrix.shape[0]):
             # Your code here
-            pass
-    raise NotImplementedError
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i],labels[i],theta,theta_0)
+    return (theta, theta_0)
 #pragma: coderesponse end
 
 
@@ -159,7 +169,26 @@ def average_perceptron(feature_matrix, labels, T):
     find a sum and divide.
     """
     # Your code here
-    raise NotImplementedError
+    theta = np.zeros(feature_matrix.shape[1])
+    theta_0 = 0
+    
+    sum_theta = np.zeros(feature_matrix.shape[1])
+    sum_theta_0 = 0
+    update_counter = 0
+    
+    # updating perceptrons
+    for t in range(T):
+        for i in get_order(feature_matrix.shape[0]):
+            # Your code here
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i],labels[i],theta,theta_0)
+            sum_theta += theta
+            sum_theta_0 += theta_0
+            update_counter += 1
+            
+    theta = sum_theta / update_counter
+    theta_0 = sum_theta_0 / update_counter
+        
+    return (theta, theta_0)
 #pragma: coderesponse end
 
 
@@ -191,7 +220,12 @@ def pegasos_single_step_update(
     completed.
     """
     # Your code here
-    raise NotImplementedError
+    if label * (np.dot(current_theta, feature_vector) + current_theta_0) <= 1:
+        current_theta = (1 - eta*L)*current_theta + eta*label*feature_vector
+        current_theta_0 += eta*label
+    else:
+        current_theta = (1 - eta*L)*current_theta
+    return (current_theta, current_theta_0)
 #pragma: coderesponse end
 
 
@@ -226,7 +260,20 @@ def pegasos(feature_matrix, labels, T, L):
     parameter, found after T iterations through the feature matrix.
     """
     # Your code here
-    raise NotImplementedError
+    theta = np.zeros(feature_matrix.shape[1])
+    theta_0 = 0
+    
+    update_counter = 1
+    
+    # updating perceptrons
+    for t in range(T):
+        for i in get_order(feature_matrix.shape[0]):
+            # Your code here
+            eta = 1 / np.sqrt(update_counter)
+            theta, theta_0 = pegasos_single_step_update(feature_matrix[i],labels[i], L, eta, theta, theta_0)
+            update_counter += 1
+        
+    return (theta, theta_0)
 #pragma: coderesponse end
 
 # Part II
@@ -251,7 +298,12 @@ def classify(feature_matrix, theta, theta_0):
     be considered a positive classification.
     """
     # Your code here
-    raise NotImplementedError
+    N = feature_matrix.shape[0]
+    sign = -np.ones(N)
+    for r in range(N):
+        if (np.dot(theta,feature_matrix[r]) + theta_0) > 0:
+            sign[r] = 1
+    return sign
 #pragma: coderesponse end
 
 
@@ -289,7 +341,11 @@ def classifier_accuracy(
     accuracy of the trained classifier on the validation data.
     """
     # Your code here
-    raise NotImplementedError
+    theta, theta_0 = classifier(train_feature_matrix, train_labels, **kwargs)
+    train_acc = accuracy(classify(train_feature_matrix, theta, theta_0), train_labels)
+    val_acc = accuracy(classify(val_feature_matrix, theta, theta_0), val_labels)
+    
+    return (train_acc, val_acc)
 #pragma: coderesponse end
 
 
