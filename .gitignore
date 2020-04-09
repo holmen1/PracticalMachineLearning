@@ -6,6 +6,15 @@
 # Files as produced by the tests
 tests/test_*.png
 
-DAT257x/.ipynb_checkpoints
+*.ipynb_checkpoints
 
 
+/Cuda/ConsoleApplication1/ConsoleApplication1/Debug
+/Cuda/ConsoleApplication1/Debug
+/Cuda/ConsoleApplication1/.vs/ConsoleApplication1/v16
+/Cuda/CudaAdder/x64/Debug
+/Cuda/CudaAdder/.vs/CudaAdder/v16/ipch/AutoPCH/e79daec2e2a82658
+/Cuda/CudaAdder/.vs/CudaAdder/v16
+/MITx686x/.vs
+/MITx686x/Unit1/.vs
+/MITx686x/Unit1/Project1/.vs
