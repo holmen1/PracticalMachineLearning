@@ -6,7 +6,7 @@ import time
 import math
 
 n_hidden = 128
-n_epochs = 10000#0
+n_epochs = 100000
 print_every = 5000
 plot_every = 1000
 learning_rate = 0.005 # If you set this too high, it might explode. If too low, it might not learn
@@ -73,5 +73,5 @@ for epoch in range(1, n_epochs + 1):
         all_losses.append(current_loss / plot_every)
         current_loss = 0
 
-torch.save(rnn, 'char-rnn-classification.pt')
+#torch.save(rnn, 'char-rnn-classification.pt')
 
